@@ -1431,7 +1431,8 @@
     .mc-title em { color:#E2C47A; }
     .mc-date { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:700; color:#E2C47A; margin:0 0 6px; }
     .mc-sub { font-family:'DM Sans',sans-serif; font-size:0.88rem; color:rgba(245,237,222,0.8); line-height:1.6; margin:0 auto 18px; max-width:440px; }
-    .mc-frame { width:100%; height:900px; border:0; border-radius:14px; background:#26103F; display:block; }
+    .mc-frame-wrap { width:100%; height:820px; overflow:hidden; border-radius:14px; background:#26103F; }
+    .mc-frame { width:100%; height:1400px; border:0; display:block; }
     .mc-fallback { display:inline-block; margin-top:14px; font-family:'DM Sans',sans-serif; font-size:0.82rem; color:rgba(245,237,222,0.75); }
     .mc-fallback a { color:#E2C47A; font-weight:600; }
   </style>
@@ -1459,7 +1460,7 @@
     <div class="mc-block" id="masterclass" style="margin-top:4px;">
       <div class="mc-eyebrow">Masterclass gratuite</div>
       <p class="mc-sub"><strong style="color:#fff;">Tu veux en savoir plus ?</strong> Inscris-toi à ma prochaine masterclass gratuite le <strong style="color:#E2C47A;">mercredi 28 octobre à 20h</strong>. Découvre la méthode et le programme en direct avec moi, et pose-moi toutes tes questions.</p>
-      <iframe class="mc-frame" src="https://webinarkit.com/webinar/registration/6acff73b064f689ff818300d" title="Inscription à la masterclass" loading="lazy"></iframe>
+      <div class="mc-frame-wrap" id="mcFrameWrap"><iframe class="mc-frame" src="https://webinarkit.com/webinar/registration/6acff73b064f689ff818300d" title="Inscription à la masterclass" scrolling="no" loading="lazy"></iframe></div>
       <p class="mc-fallback">Le formulaire ne s'affiche pas ? <a href="https://webinarkit.com/webinar/registration/6acff73b064f689ff818300d" target="_blank" rel="noopener">Ouvre la page d'inscription →</a></p>
     </div>
     <div class="formule-eyebrow" style="margin-top:48px;">Le contenu du programme</div>
@@ -1942,6 +1943,19 @@
     document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
     if (!isOpen) item.classList.add('open');
   }
+  // Masterclass : n'affiche que le formulaire d'inscription WebinarKit (coupe sous le bouton)
+  (function(){
+    var wrap=document.getElementById('mcFrameWrap'); if(!wrap) return;
+    var pts=[[280,1069],[300,999],[330,939],[360,812],[400,793],[450,746],[564,727]];
+    function fit(){
+      var w=wrap.clientWidth, h=pts[pts.length-1][1];
+      if(w<=pts[0][0]) h=pts[0][1];
+      else for(var i=0;i<pts.length-1;i++){ var a=pts[i],b=pts[i+1];
+        if(w>=a[0]&&w<=b[0]){ h=a[1]+(b[1]-a[1])*(w-a[0])/(b[0]-a[0]); break; } }
+      wrap.style.height=Math.round(h+45)+'px';
+    }
+    fit(); window.addEventListener('resize',fit);
+  })();
 </script>
 
 </body>
