@@ -1952,7 +1952,7 @@
       if(w<=pts[0][0]) h=pts[0][1];
       else for(var i=0;i<pts.length-1;i++){ var a=pts[i],b=pts[i+1];
         if(w>=a[0]&&w<=b[0]){ h=a[1]+(b[1]-a[1])*(w-a[0])/(b[0]-a[0]); break; } }
-      wrap.style.height=Math.round(h+45)+'px';
+      wrap.style.height=Math.round(h+30)+'px';
     }
     fit(); window.addEventListener('resize',fit);
   })();
